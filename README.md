@@ -35,3 +35,27 @@ Library(주도권이 개발자에게 있다) - React.js, JQuery
 ## Client Side Rendering(CSR)
 - React.js 앱의 기본적인 렌더링 방식
 - 클라이언트(브라우저)에서 직접 화면을 렌더링하는 방식
+
+
+# Page Router 를 소개합니다. 
+> 안정적인 라우터   
+> React Router처럼 페이징 라우팅 기능을 제공함.
+
+- pages 폴더를 기준으로 라우팅됨.
+- 동적경로 ~/item/100 같은 페이지를 만드려면 폴더를 pages/item/[id].js  로 생성
+
+
+- npx create-next-app@14 section02
+- npm run dev
+
+## 프로젝트 구조 확인
+- public - 동적 파일
+- src
+    - pages : 경로에 맞는 페이지
+    - styles
+
+- _app.tsx : 모든 페이지의 부모역할을 하는 root 컴포넌트
+    => layout이나 공통 비즈니스 로직을 작성할 수 있음.
+- _document.tsx : 모든 페이지에 공통적으로 적용해야하는 html 코드 설정.
+    => meta 태그, font, chracter set, Third party code
+- next.config.mjs : next앱의 설정 관리
