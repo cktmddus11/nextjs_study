@@ -56,3 +56,16 @@ import { useRouter } from "next/router";
 
 ## Not Found 페이지 만들기
 - pages/404.tsx 파일 생성해서 기본 page 컴포넌트 리턴해주기.
+
+
+# 네비게이팅
+```html
+<a></a> # 기존의 a 태그는 csr 방식으로 페이지를 이동시키는 게 아니라
+# html 일반적인 방식으로 페이지를 매번 새롭게 요청하는 방식으로 이동시키게 됨.
+```
+- next.js app => Link 컴포넌트 사용.
+- csr 방식으로 페이지 이동하도록 구현
+```js
+import {useRouter} from "next/router";
+ router.push("/test")
+```
