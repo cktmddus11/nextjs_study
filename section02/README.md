@@ -85,3 +85,11 @@ import {useRouter} from "next/router";
 <Link href={'/search'} prefetch={false}>search</Link>
 
 ```
+
+# API Routes
+Next.js 에서 API를 구축할 수 있게 해주는 기능
+
+## API 정의
+- pages > api > hello.ts => /api/hello 라는 api 경로로 작동됨.
+- NextApiRequest, NextApiResponse 객체 사용   
+  [API ROUTES 공식 문서](https://nextjs.org/docs/pages/building-your-application/routing/api-routes)
