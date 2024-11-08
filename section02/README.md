@@ -69,3 +69,19 @@ import { useRouter } from "next/router";
 import {useRouter} from "next/router";
  router.push("/test")
 ```
+
+### pre-fetching 예외
+- Link 컴포넌트로는 잘됨.
+- 프로그래밍적으로? 페이지 이동을 구현해 놨을 경우 EX) button 으로 클릭시 했을 때는 안됨
+
+### router 객체의 prefetch 이용하기
+```js
+  useEffect(() => {
+    router.prefetch("/test")
+  }, []);
+```
+### 해제
+```js
+<Link href={'/search'} prefetch={false}>search</Link>
+
+```
