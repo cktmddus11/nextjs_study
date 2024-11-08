@@ -58,7 +58,7 @@ import { useRouter } from "next/router";
 - pages/404.tsx 파일 생성해서 기본 page 컴포넌트 리턴해주기.
 
 
-# 네비게이팅
+# 2.3) 네비게이팅
 ```html
 <a></a> # 기존의 a 태그는 csr 방식으로 페이지를 이동시키는 게 아니라
 # html 일반적인 방식으로 페이지를 매번 새롭게 요청하는 방식으로 이동시키게 됨.
@@ -86,10 +86,23 @@ import {useRouter} from "next/router";
 
 ```
 
-# API Routes
+# 2.5) API Routes
 Next.js 에서 API를 구축할 수 있게 해주는 기능
 
 ## API 정의
 - pages > api > hello.ts => /api/hello 라는 api 경로로 작동됨.
 - NextApiRequest, NextApiResponse 객체 사용   
   [API ROUTES 공식 문서](https://nextjs.org/docs/pages/building-your-application/routing/api-routes)
+
+
+
+# 2.6) 스타일링
+- app 컴포넌트가 아닌 다른 컴포넌트에서는 global css 바로 import 할 수없음
+  => css class 충돌방지를 위해 
+
+## CSS Module
+- index.module.css 로 import 후 객체에 담아서 페이지 별로 유니크하게 사용
+```js
+import style from "./index.module.css";
+
+```
