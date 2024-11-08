@@ -113,16 +113,53 @@ import style from "./index.module.css";
   - global-layout.module.css import 
 
 ```js
-# global-layout.tsx
+// global-layout.tsx
   export default function GlobalLayout({children} : {
     children:ReactNode
   }){
     return <>
-# _app.tsx
+```
+```js
+// _app.tsx
     export default function App({Component, pageProps}: AppProps) {
     // Component : 페이지 역할
     // pageProps : 페이지에 전달할 Props
     return <>
     <GlobalLayout>
     <Component {...pageProps} />
+```
+- 레이아웃 컴포넌트에는 children 으로 APP 컴포넌트에서 전달하는 PageProps를 받을 수 있도록 함.
+
+# 2.8) 페이지별 레이아웃 설정하기
+- 요건 : 검색바는 전체 화면에서 존재하지만 도서 상세 화면에서만 적용되지 않아야함.
+  => global 컴포넌트 말고 필요한 페이지에서 컴포넌트를 호출하기
+
+- 구현 : 각 페이지에 getLayout 함수 전달해서 App 컴포넌트에 페이지 컴포넌트 렌더링 할때 getLayout 에 있는 컴포넌트로 감싸서 전달되도록 처리.
+```js 
+// 각 페이지 컴포넌트
+Home.getLayout = (page: ReactNode) => {
+  return <SearchableLayout>{page}</SearchableLayout>
+}
+```
+- App컴포넌트에 Component 파라미터에 각 페이지 컴포넌트가 담겨있음. 그래서 각 페이지에 인수로 전달한 getLayout함수를 Component 객체로 
+불러올 수 있음. 
+```js 
+// app 컴포넌트
+    const getLayout = Component.getLayout;
+    return <>
+        <GlobalLayout>
+            {getLayout(<Component {...pageProps} />)}
+```
+- NextPage 타입 확장
+```js
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactNode) => ReactNode;  //  getLayout? : typescript 선택적 속성 (?) getLayout이 없는 페이지 때문에 옵셔널하게 처리
+}
+```
+- AppProps 타입 확장 
+```js
+export default function App({Component, pageProps}: AppProps & {
+  Component : NextPageWithLayout
+}) {
+
 ```

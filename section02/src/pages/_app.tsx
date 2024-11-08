@@ -1,14 +1,23 @@
 import "@/styles/globals.css";
 import type {AppProps} from "next/app";
 import GlobalLayout from "@/components/global-layout";
+import {ReactNode} from "react";
+import {NextPage} from "next";
 
+type NextPageWithLayout = NextPage & {
+    getLayout?: (page: ReactNode) => ReactNode;
+}
 
-export default function App({Component, pageProps}: AppProps) {
+export default function App({Component, pageProps}: AppProps & {
+    Component : NextPageWithLayout
+}) {
     // Component : 페이지 역할
-   // pageProps : 페이지에 전달할 Props
+    // pageProps : 페이지에 전달할 Props
+    // console.log(Component.getLayout);
+    const getLayout = Component.getLayout ?? ((page: ReactNode) => page); // NULL병합연산자 : NULL이거나 undefined 일때 기본 page 컴포넌트 리턴
     return <>
         <GlobalLayout>
-            <Component {...pageProps} />
+            {getLayout(<Component {...pageProps} />)}
         </GlobalLayout>
     </>;
 }
