@@ -106,3 +106,23 @@ Next.js 에서 API를 구축할 수 있게 해주는 기능
 import style from "./index.module.css";
 
 ```
+
+# 2.7) 글로벌 레이아웃 설정하기
+- src > components > global-layout.tsx
+  - APP 컴포넌트에 GlobalLayout 으로 감싸주기
+  - global-layout.module.css import 
+
+```js
+# global-layout.tsx
+  export default function GlobalLayout({children} : {
+    children:ReactNode
+  }){
+    return <>
+# _app.tsx
+    export default function App({Component, pageProps}: AppProps) {
+    // Component : 페이지 역할
+    // pageProps : 페이지에 전달할 Props
+    return <>
+    <GlobalLayout>
+    <Component {...pageProps} />
+```
