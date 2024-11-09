@@ -45,13 +45,11 @@ import { useRouter } from "next/router";
 - ./book/100, ./book/200 과 같은 동적 페이지 생성시
     - book 폴더 하위에 [id].tsx 라는 파일을 생성하면 동적경로와 대응하게 됨.
     - [] 안에 있는 값이 키값이 되어 저장됨.
-- ./book/123/4324 과 같은 여러개의 값을 보내고 있으면
+- ./book/123/4324  
     - [...id].tsx 와 같이 파일을 생성한다.(Catch All Segment)
     - ... 는 여러개의 id가 들어갈 수 있다는 의미 
-    - query 객체에는 배열형태로 저장되어있음.
-- ./book 을 했을때는 404 not found 로 뜨게 됨 
-    - url parameter을 받도록 해두었기 때문에 
-    - => book 페이지를 만들어주면 되지 않나 하지만 이거보다
+    - router query 객체에는 배열형태로 저장되어있음.
+- ./book 을 했을때는 404 not found 로 뜨게 됨 (url parameter을 무조건 받도록 해두었기 때문에)
     - [[...id]].jsx 와 같이 대괄호로 한번더 감싸주면 id가 있든 없든 대응이 가능하다. (Optional Catch All Segement)
 
 ## Not Found 페이지 만들기
@@ -190,4 +188,6 @@ export default function App({Component, pageProps}: AppProps & {
 }) {
 
 ```
-
+# 2.9) 한입 북스 UI 구현하기
+- 책 상세 페이지 요건 : 책 상세는 id를 포함한 페이지이동만이 가능해야한다. 
+  - [[...id]].tsx => [id].tsx로 변경하기 : /book 이동 불가하고 /book/1/234/3 여러개 id불가능. /book/1 만 가능.
