@@ -36,7 +36,7 @@
 > * 단점 : FCP (초기 접속 속도) 가 느림.   
 
 -> 클라이언트가 필요로하는 전체코드를 JS Bundle Client 에게 제공해주고  Client 에서 페이지 이동이 발생하면 Js를 실행하여 화면을 업데이트 해줌.   
-[Client Side Rendering](./img/CSR.PNG)  
+![Client Side Rendering](./img/CSR.PNG)  
 
 ### FCP(First Contentful Paint)
 - "요청 시작" 시점부터 컨텐츠가 화면에 처음 나타나는데 걸리는 시간
@@ -44,7 +44,7 @@
 
 
 # React 의 문제점을 해결하는 Next.js 의 사전렌더링
-[사전렌더링](./img/사전렌더링.PNG)   
+![사전렌더링](./img/사전렌더링.PNG)   
 초기렌더링엔 상호작용이 불가능한 HTML 을 화면에 렌더링 후에   
 > * JS 실행(렌더링) : 자바스크립트 코드(React 컴포넌트)를 HTML 로 변환하는 과정
 > * 화면에 렌더링 : HTML  코드를 브라우저가 화면에 그려내는 과정.
@@ -52,7 +52,7 @@
 바로 연속해서 서버가 JS Bundle 된 코드를 전달해주고 클라이언트는 HTML 과 해당 소스를 연결하여 상호작용이 가능한 HTML 을 만든다.    
 -> 이처럼 언터렉션(상호작용)이 불가한 코드에 Javascript 코드를 추가해주어 
 인터렉션이 가능한 화면이되는 것을 빗대어 **수화(Hydration)**라고 말한다.
-[사전렌더링](./img/사전렌더링2.PNG)   
+![사전렌더링](./img/사전렌더링2.PNG)   
 > TTI : Time To Interative
 
 ### Next.js 

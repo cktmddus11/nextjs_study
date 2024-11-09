@@ -70,6 +70,33 @@ import {useRouter} from "next/router";
  router.push("/test")
 ```
 
+# 2.4 프리패칭 Pre-fetching
+사용자가 보고있는 페이지를 미리 불러오는 기능.   
+> Q. 왜 필요할까? 이미 Next js 는 CSR 으로 별도의 서버 요청없이 브라우져가 JS를 실행하여 컴포넌트를 
+교체하는 방식으로 페이지를 교체할 수 있는데.   
+> A. 컴포넌트들을 각 페이지별로 slit 해서 가지고 있기때문임.
+
+- **Js Bundle : 현재 페이지에 필요한 JS Bundle 만 전달된다.**
+  - ex) "/search" 접속요청 -> Search JS Bundle
+  - 만약 모든 페이지 번들파일을 전달할 경우 용량이 너무 커지게 되며 하이드레이션이 느려지게됨.   
+    즉, 요청부터 사용자에게 보여지기까지의 시간인 TTI 가 느려지게됨.   
+  -> 용량 경량화로 인해 Hydration 시간은 단축된다.
+
+> Q. 그럼 다른 페이지 이동할때는 또 서버에서 js Bundle 가 필요하겠네?   
+> A. 맞음. TTI는 빨라질수 있어도 페이지 이동이 느려질수 있음.    
+     그렇기 때문에 Pre-Fetching 사전에 미리 불러오는 기능을 사용함.
+
+## 프리패칭이란?
+초기접속 이후에 연결된 모든 페이지의 JS Bundle을 사전에 불러옴.
+-> 페이지 이동이 빨라짐
+ ![Pre-Fetching](../img/Pre-Fetching.png)
+즉 Js Bundle 후에 pre-fetching 후 페이지 이동 발생 시 컴포넌트만 교체하는 순으로 렌더링함.
+![Pre-Fetching](../img/Pre-Fetching2.png)
+
+하지만 npm run dev 상태에서는 이 기능이 동작안함.
+- npm run build : 소스 빌드. 빌드 로그에서 각 페이지별 js Bundle 코드의 용량까지 확인 할 수 있음.   
+- npm run start : production 모드로 실행. 
+
 ### pre-fetching 예외
 - Link 컴포넌트로는 잘됨.
 - 프로그래밍적으로? 페이지 이동을 구현해 놨을 경우 EX) button 으로 클릭시 했을 때는 안됨
