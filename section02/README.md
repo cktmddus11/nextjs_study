@@ -70,8 +70,8 @@ import {useRouter} from "next/router";
 
 # 2.4 프리패칭 Pre-fetching
 사용자가 보고있는 페이지를 미리 불러오는 기능.   
-> Q. 왜 필요할까? 이미 Next js 는 CSR 으로 별도의 서버 요청없이 브라우져가 JS를 실행하여 컴포넌트를 
-교체하는 방식으로 페이지를 교체할 수 있는데.   
+> Q. 왜 필요할까? 이미 Next js 는 CSR 으로 별도의 서버 요청없이 브라우져가 JS를 실행하여 컴포넌트를
+> 교체하는 방식으로 페이지를 교체할 수 있는데.   
 > A. 컴포넌트들을 각 페이지별로 slit 해서 가지고 있기때문임.
 
 - **Js Bundle : 현재 페이지에 필요한 JS Bundle 만 전달된다.**
@@ -191,3 +191,41 @@ export default function App({Component, pageProps}: AppProps & {
 # 2.9) 한입 북스 UI 구현하기
 - 책 상세 페이지 요건 : 책 상세는 id를 포함한 페이지이동만이 가능해야한다. 
   - [[...id]].tsx => [id].tsx로 변경하기 : /book 이동 불가하고 /book/1/234/3 여러개 id불가능. /book/1 만 가능.
+
+
+# 2.10) 사전 렌더링과 데이터 패칭
+
+### React App 에서의 데이터 페칭
+- 단점 : 초기 접속 요청부터 데이터 로딩까지 오랜 시간이 걸림.
+  - 3번 과정에서 화면이 마운트 된 후에 요청이 들어가기 때문에. 
+```js
+export default Page = () => {
+    const [state, setState] = useState(); // 1. 불러온 데이터를 보관할 state 생성
+    const fetchData = async () => { // 2. 데이터 패칭 함수 생성
+        const response = await fetch("...");
+        const data = await response.json();
+
+        setState(data);
+    }
+    useEffect(() => { // 3. 컴포넌트 마운트 시점에 fetchData 호출
+        fetchData();
+    }, []);
+    if(!state) return "loading..."; // 4. 데이터 로딩중일떄의 예외처리
+
+    return <div>...</div>;
+}
+
+```
+![React js App 사전렌더링](../img/Reacte데이터패칭.png)
+
+### Next App 에서의 데이터 페칭
+![Next js App 사전렌더링](../img/Nextjs데이터패칭.png)
+
+> React App 의 데이터 패칭
+>> - 컴포넌트 마운트 이후에 발생함.   
+>> - 데이터 요청 시점이 느려지게 되는 단점 발생.
+
+> Next App 의 데이터 패칭
+>> - **사전렌더링**중 발생함(당연히 컴포넌트 마운트 이후에도 발생가능)   
+>> - 데이터 요청 시점이 매우 빨라지는 장점이 있음.
+
