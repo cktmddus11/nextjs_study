@@ -1,11 +1,7 @@
 import {BookData} from "@/types";
 
-export default async function fetchBooks(q?:string) : Promise<BookData[]>{
-    let url = `http://localhost:12345/book`
-
-    if(q){
-        url += `/search?q=${q}`;
-    }
+export default async function fetchBookDetail(id?:number) : Promise<BookData | null>{
+    const url = `http://localhost:12345/book/${id}`
 
     try{
         const response = await fetch(url);
@@ -16,6 +12,6 @@ export default async function fetchBooks(q?:string) : Promise<BookData[]>{
     }
     catch(err){
         console.error(err);
-        return [];
+        return null;//as unknown as BookData; // null을 반환하되 타입 호환을 위해 처리
     }
 }
