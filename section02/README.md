@@ -229,3 +229,42 @@ export default Page = () => {
 >> - **사전렌더링**중 발생함(당연히 컴포넌트 마운트 이후에도 발생가능)   
 >> - 데이터 요청 시점이 매우 빨라지는 장점이 있음.
 
+
+### Next.js 의 다양한 사전 렌더링
+1. 서버사이드 렌더링(SSR)
+- 가장 기본적인 사전 렌더링 방식
+- 요청이 들어올때 마다 사전 렌더링을 진행함.
+2. 정적 사이트 생성(SSG)
+- 방금 살펴본 사전 렌더링 방식
+- 빌드 타임에 미리 페이지를 사전 렌더링 해둠
+3. 중분 정적 재생성(ISR)
+- 향후에 다룰 사전 렌더링 방식
+
+# 2.11) SSR(서버 사이드 렌더링) 소개 및 실습
+```js
+export const getServerSideProps = () => {
+    // 1. 컴포넌트보다 먼저 실행되어서, 컴포넌트에 필요한 데이터 불러오는 함수
+    // 2. 한번만 실행됨? 서버측에서 실행
+   // window.location; 서버 스크립트 사용 불가능.
+    console.log("서버사이드 프롭스");
+
+    const data = "hello";
+    return {
+        props: { // props 객체를 리턴해주어야함.
+            data,
+        }
+    }
+}
+export default function Home({data} : any) { 
+    
+```
+### index.tsx - Home 컴포넌트
+1. 사전렌더링 - 서버 실행 2. 브라우저 js 번들 렌더링
+- 모든 컴포넌트는 서버에서 한번 실행되기 때문에 그냥 클라이언트 코드를 작성하면 안됨.
+=> useEffect 를 이용해서 화면 렌더링 후 호출되도록 하기.
+
+### getServerSideProps 로 부터 props 데이터 전달받는 타입 정의
+```js
+export default function Home({data} : InferGetServerSidePropsType<typeof getServerSideProps>) { // Home 컴포넌트도 즉 객체이므로 getLayout 함수 추가 가능.
+
+```
