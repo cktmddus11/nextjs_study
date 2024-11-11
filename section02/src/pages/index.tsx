@@ -2,38 +2,43 @@
 import style from "./index.module.css";
 import SearchableLayout from "@/components/searchable-layout";
 import {ReactNode, useEffect} from "react";
-import books from '@/mock/books.json';
+// import books from '@/mock/books.json';
 import BookItem from "@/components/book-item";
-import {InferGetServerSidePropsType} from "next"; // @ : src typescript
+import {InferGetServerSidePropsType} from "next";
+import fetchBooks from "@/lib/fetch-books";
+import fetchRandomBooks from "@/lib/fetch-random-books"; // @ : src typescript
 
-export const getServerSideProps = () => {
+export const getServerSideProps = async () => {
     // 컴포넌트보다 먼저 실행되어서, 컴포넌트에 필요한 데이터 불러오는 함수
-    // 한번만 실행됨? 서버측에서 실행
-    // window.location; 서버 스크립트 사용 불가능.
-    console.log("서버사이드 프롭스");
+    // const allBooks = await fetchBooks();
+    // const recoBooks = await fetchRandomBooks();
 
-    const data = "hello";
+    // 병렬 호출 처리
+    const [allBooks, recoBooks] = await Promise.all([
+        fetchBooks(),
+        fetchRandomBooks()
+    ]);
+
     return {
         props: { // props 객체를 리턴해주어야함.
-            data,
+            allBooks,
+            recoBooks
         }
     }
 }
 // 1. 사전렌더링 - 서버 실행 2. 브라우저 js 번들 렌더링
 export default function Home({
-                                 data
+                                 allBooks,
+                                 recoBooks
                              }: InferGetServerSidePropsType<typeof getServerSideProps>) { // Home 컴포넌트도 즉 객체이므로 getLayout 함수 추가 가능.
-    console.log(data);
-    useEffect(() => {
-        console.log(window);
-    }, []);
+   // console.log(allBooks);
 
     return (
         <div className={style.container}>
             <section>
                 <h3>지금 추천하는 도서</h3>
                 {
-                    books.map((book) =>
+                    recoBooks.map((book) =>
                         <BookItem key={book.id} {...book}/>
                     )
                 }
@@ -41,7 +46,7 @@ export default function Home({
             <section>
                 <h3>등록된 모든 도서</h3>
                 {
-                    books.map((book) =>
+                    allBooks.map((book) =>
                         <BookItem key={book.id} {...book}/>
                     )
                 }
@@ -56,3 +61,21 @@ Home.getLayout = (page: ReactNode) => {
 }
 // <h1 className={style.h1}>index??</h1>
 // <h2 className={style.h2}>index??</h2>
+
+// console.log(data);
+// useEffect(() => {
+//     console.log(window);
+// }, []);
+
+// export const getServerSideProps = () => {
+//     // 컴포넌트보다 먼저 실행되어서, 컴포넌트에 필요한 데이터 불러오는 함수
+//     // 한번만 실행됨? 서버측에서 실행
+//     console.log("서버사이드 프롭스");
+//
+//     const data = "hello";
+//     return {
+//         props: { // props 객체를 리턴해주어야함.
+//             data,
+//         }
+//     }
+// }
