@@ -21,7 +21,7 @@ export default function Page({bookDetail}: InferGetServerSidePropsType<typeof ge
         return "문제가 발생했습니다. 다시 시도하세요."
     }
     const {
-        id,
+       // id,
         title,
         subTitle,
         description,

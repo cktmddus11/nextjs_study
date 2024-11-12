@@ -1,23 +1,42 @@
-import {ReactNode} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import SearchableLayout from "@/components/searchable-layout";
 import BookItem from "@/components/book-item";
-import {GetServerSidePropsContext, InferGetServerSidePropsType} from "next";
 import fetchBooks from "@/lib/fetch-books";
+import {useRouter} from "next/router";
+import {BookData} from "@/types";
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-    // console.log(context);
-    const q = context.query.q;
-    // console.log(q);
-    const searchBooks = await fetchBooks(q as string);
+// SSG 로 GetStaticPropsContext query 조회 불가 - 빌드과정에서만 실행되기 떄문.
+// export const getStaticProps = async (context: GetStaticPropsContext) => {
+//     // console.log(context);
+//     const q = context.query.q;
+//     // console.log(q);
+//     const searchBooks = await fetchBooks(q as string);
+//
+//     return {
+//         props: {
+//             searchBooks
+//         },
+//     }
+// }
 
-    return {
-        props: {
-            searchBooks
-        },
-    }
-}
+export default function Page() {
+    const [searchBooks, setSearchBooks] = useState<BookData[]>([]);
+//export default function Page({searchBooks} : InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const router = useRouter();
+    const q = router.query.q;
 
-export default function Page({searchBooks} : InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const fetchSearchResult = async () => {
+        const data = await fetchBooks(q as string);
+        setSearchBooks(data);
+    };
+
+
+    useEffect(() => {
+        if(q){
+            // 검색결과를 불러오는 로직
+            fetchSearchResult();
+        }
+    }, [q]);
 
     return <div>
         {
