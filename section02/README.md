@@ -273,3 +273,12 @@ export default function Home({data} : InferGetServerSidePropsType<typeof getServ
 
 - GetStaticPropsContext -> queryString -> context.query 동작 불가 -> 빌드타임에 실행되기 때문.
   => 화면이 렌더링 된 이후에 클라이언트 측에서 queryString값을 읽어오도록 구현하기.
+
+# 2.15) SSG 2. 동적 경로에 적용하기
+동적인 경로를 가진 페이지를 SSG 렌더링을 적용하려면 getStaticPaths 를 함께 적용해주어야한다. 
+
+- book > [id].tsx 수정
+  -  빌드타임(Build Time) 에 페이지별로 생성될 수 있는 페이지 경로를 설정해주어야함.
+  => 1. n 개의 경로설정 (getStaticPaths) => 2. n개의 페이지 사전 렌더링
+  - 확인
+    - npm run build => book 동적경로가 정적파일로 생성된 내용을 확인 할 수 있음. 또한 .next 빌드 산출물 폴더에서 확인할 수 있음.
