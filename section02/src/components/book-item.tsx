@@ -12,7 +12,6 @@ export default function BookItem({
                                      coverImgUrl
                                  }: BookData) {
     return <Link href={`/book/${id}`} className={style.container}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={coverImgUrl}/>
         <div>
             <div className={style.title}>{title}</div>

@@ -26,8 +26,7 @@ export const getStaticProps = async () => {
                 allBooks,
                 recoBooks
             },
-            revalidate:3, // revalidate : 재생성하다.
-
+            //   revalidate:3, // revalidate : 재생성하다.
         }
     }catch(error){
         console.error('Error in getStaticProps:', error);
