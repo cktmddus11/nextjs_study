@@ -6,7 +6,7 @@ import {GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType} from "ne
 import {useRouter} from "next/router";
 
 
-export const getStaticPaths : GetStaticPaths = () => {
+export const getStaticPaths : GetStaticPaths = async () => {
     return {
         paths: [  // 렌더링 될 수있는 페이지 id 설정
                    // url param은 무조건 string 으로 주어야함.

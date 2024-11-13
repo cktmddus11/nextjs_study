@@ -9,22 +9,33 @@ import fetchBooks from "@/lib/fetch-books";
 import fetchRandomBooks from "@/lib/fetch-random-books"; // @ : src typescript
 
 export const getStaticProps = async () => {
-    // 컴포넌트보다 먼저 실행되어서, 컴포넌트에 필요한 데이터 불러오는 함수
-    // const allBooks = await fetchBooks();
-    // const recoBooks = await fetchRandomBooks();
+    try {
+        // 컴포넌트보다 먼저 실행되어서, 컴포넌트에 필요한 데이터 불러오는 함수
+        // const allBooks = await fetchBooks();
+        // const recoBooks = await fetchRandomBooks();
 
-    console.log("인덱스 페이지")
-    // 병렬 호출 처리
-    const [allBooks, recoBooks] = await Promise.all([
-        fetchBooks(),
-        fetchRandomBooks()
-    ]);
+        console.log("인덱스 페이지")
+        // 병렬 호출 처리
+        const [allBooks, recoBooks] = await Promise.all([
+            fetchBooks(),
+            fetchRandomBooks()
+        ]);
 
-    return {
-        props: { // props 객체를 리턴해주어야함.
-            allBooks,
-            recoBooks
+        return {
+            props: { // props 객체를 리턴해주어야함.
+                allBooks,
+                recoBooks
+            },
+            //   revalidate:3, // revalidate : 재생성하다.
         }
+    }catch(error){
+        console.error('Error in getStaticProps:', error);
+        return {
+            props: {
+                allBooks: [], // 기본 값 반환
+                recoBooks: [] // 기본 값 반환
+            },
+        };
     }
 }
 // 1. 사전렌더링 - 서버 실행 2. 브라우저 js 번들 렌더링

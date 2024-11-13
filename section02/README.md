@@ -322,6 +322,13 @@ export const getStaticPaths : GetStaticPaths = () => {
 ```
 
 
-
-
-
+# 2.17) ISR 1. 소개 및 실습
+## ISR이란?
+ISR(Incremental Static Regeneration)
+        증분     정적     재생성
+- SSG 방식으로 생성된 정적 페이지를 일정 시간을 주기로 다시 생성하는 기술.
+- 장점 : 매우 빠른 속도로 응답가능(기존 SSG 방식의 장점) + 최신데이터 반영 가능(기존 SSR 방식의 장점)
+## ISR 적용
+- index.tsx 적용
+  - 추천도서를 시간에 따라 달리 보여주게 하기 위해서 ISR 적용
+  - getStaticProps 함수의 revalidate 옵션 설정
