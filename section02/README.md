@@ -282,3 +282,46 @@ export default function Home({data} : InferGetServerSidePropsType<typeof getServ
   => 1. n 개의 경로설정 (getStaticPaths) => 2. n개의 페이지 사전 렌더링
   - 확인
     - npm run build => book 동적경로가 정적파일로 생성된 내용을 확인 할 수 있음. 또한 .next 빌드 산출물 폴더에서 확인할 수 있음.
+
+
+
+# 2.16)  SSG 4. 폴백 옵션 설정하기
+> Fallback 옵션 설정 (없는 경로로 요청시)
+> 1) false : 404 Not Found 반환
+> 2) blocking : 즉시 생성 (Like SSR)
+> 3) true : 즉시생성 + 페이지만 미리 반환(SSR + 데이터가 없는 폴백 상태의 페이지부터 반환) 
+
+
+### Fallback - blocking
+- 요청 시 빌드 타임에 렌더링. 한번 실행 후 생성한 html 을 리턴함. (SSR + SSG)
+=> 렌더링 중 지연되면 이후 순서도 지연됨.
+
+### Fallback - true
+- 요청 props 가 없는 페이지 변환(데이터가 없는 상태의 페이지 렌더링) -> props 계산 
+-> props 만 따로 반환 -> 데이터가 있는 상태의 페이지 렌더링
+
+```typescript
+export const getStaticPaths : GetStaticPaths = () => {
+  return {
+    paths: [  // 렌더링 될 수있는 페이지 id 설정
+      // url param은 무조건 string 으로 주어야함.
+      {params: {id: "1"}},
+      {params: {id: "2"}},
+      {params: {id: "3"}}
+    ],
+    // 대체, 대비책 : paths 에 지정하지 않은 페이지 렌더링이요청됐을 때 어떻게 처리할것인지
+    fallback : true,//"blocking", // false : path에 설정하지 않은 페이지는 not found 처리
+
+}
+
+  export default function Page({bookDetail}: InferGetStaticPropsType<typeof getStaticProps>) {
+    const router = useRouter();
+    if(router.isFallback) return "로딩중입니다.";
+    if (!bookDetail) return "문제가 발생했습니다. 다시 시도하세요.";
+    ...
+```
+
+
+
+
+

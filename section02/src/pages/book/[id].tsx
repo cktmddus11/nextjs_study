@@ -3,6 +3,7 @@ import SearchableLayout from "@/components/searchable-layout";
 import style from './[id].module.css';
 import fetchBookDetail from "@/lib/fetch-books-detail";
 import {GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType} from "next";
+import {useRouter} from "next/router";
 
 
 export const getStaticPaths : GetStaticPaths = () => {
@@ -14,7 +15,7 @@ export const getStaticPaths : GetStaticPaths = () => {
             {params: {id: "3"}}
         ],
         // 대체, 대비책 : paths 에 지정하지 않은 페이지 렌더링이요청됐을 때 어떻게 처리할것인지
-        fallback : false, // false : path에 설정하지 않은 페이지는 not found 처리
+        fallback : true,//"blocking", // false : path에 설정하지 않은 페이지는 not found 처리
     }                     // true :
 
 }
@@ -25,7 +26,11 @@ export const getStaticPaths : GetStaticPaths = () => {
         const id = context.params!.id; // undefined 일수도 있음
 
         const bookDetail = await fetchBookDetail(Number(id));
-
+        if(!bookDetail){
+            return {
+                notFound : true,
+            }
+        }
         return {
             props: {
                 bookDetail
@@ -33,7 +38,9 @@ export const getStaticPaths : GetStaticPaths = () => {
         }
     }
     export default function Page({bookDetail}: InferGetStaticPropsType<typeof getStaticProps>) {
-        if (!bookDetail) return "문제가 발생했습니다. 다시 시도하세요."
+        const router = useRouter();
+        if(router.isFallback) return "로딩중입니다.";
+        if (!bookDetail) return "문제가 발생했습니다. 다시 시도하세요.";
 
         const {
             // id,
