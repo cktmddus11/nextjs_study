@@ -323,6 +323,7 @@ export const getStaticPaths : GetStaticPaths = () => {
 
 
 # 2.17) ISR 1. 소개 및 실습
+![ISR](../img/ISR.png)
 ## ISR이란?
 ISR(Incremental Static Regeneration)
         증분     정적     재생성
@@ -332,3 +333,15 @@ ISR(Incremental Static Regeneration)
 - index.tsx 적용
   - 추천도서를 시간에 따라 달리 보여주게 하기 위해서 ISR 적용
   - getStaticProps 함수의 revalidate 옵션 설정
+  - >> 새로고침 시 3초간격으로 새로운 데이터가 패칭되며 렌더링된다.
+
+# 2.18) ISR 2. 주문형 재 검증
+![ISR](../img/On-demand-ISR1.png)
+- 시간기반 ISR 을 적용하기 어려운 페이지도 존재함. 
+  - ex) 게시물상세 조회 화면에 적용했을 때 사용자가 게시글을 수정하지 않는이상 데이터 변경은 이루어   
+  지지 않아도 데이터 패칭 및 렌더링이 발생함. 
+  => 시간과 관계없이 사용자의 행동에 따라 데이터가 업데이트 되는 페이지
+
+## On-Demand-ISR 
+요청을 받을 때마다 페이지를 다시 생성하는 ISR
+![ISR](../img/On-demand-ISR.png)
