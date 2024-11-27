@@ -28,7 +28,7 @@ export const getStaticProps = async () => {
             },
             //   revalidate:3, // revalidate : 재생성하다.
         }
-    }catch(error){
+    } catch (error) {
         console.error('Error in getStaticProps:', error);
         return {
             props: {
@@ -43,28 +43,36 @@ export default function Home({
                                  allBooks,
                                  recoBooks
                              }: InferGetStaticPropsType<typeof getStaticProps>) { // Home 컴포넌트도 즉 객체이므로 getLayout 함수 추가 가능.
-   // console.log(allBooks);
+    // console.log(allBooks);
 
     return (
-        <div className={style.container}>
-            <section>
-                <h3>지금 추천하는 도서</h3>
-                {
-                    recoBooks.map((book) =>
-                        <BookItem key={book.id} {...book}/>
-                    )
-                }
-            </section>
-            <section>
-                <h3>등록된 모든 도서</h3>
-                {
-                    allBooks.map((book) =>
-                        <BookItem key={book.id} {...book}/>
-                    )
-                }
-            </section>
+        <>
+            <Head>
+                <title>한입북스</title>
+                <meta property="og:image" content="/thumbnail.png"/>
+                <meta property="og:title" content="한입북스"/>
+                <meta property="og:description" content="한입 북스에 등록된 도서들을 만나보세요" />
+            </Head>
+            <div className={style.container}>
+                <section>
+                    <h3>지금 추천하는 도서</h3>
+                    {
+                        recoBooks.map((book) =>
+                            <BookItem key={book.id} {...book}/>
+                        )
+                    }
+                </section>
+                <section>
+                    <h3>등록된 모든 도서</h3>
+                    {
+                        allBooks.map((book) =>
+                            <BookItem key={book.id} {...book}/>
+                        )
+                    }
+                </section>
 
-        </div>
+            </div>
+        </>
     );
 }
 
