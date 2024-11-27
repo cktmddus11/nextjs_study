@@ -1,4 +1,3 @@
-// CSS Module
 import style from "./index.module.css";
 import SearchableLayout from "@/components/searchable-layout";
 import {ReactNode} from "react";
@@ -7,6 +6,7 @@ import BookItem from "@/components/book-item";
 import {InferGetStaticPropsType} from "next";
 import fetchBooks from "@/lib/fetch-books";
 import fetchRandomBooks from "@/lib/fetch-random-books"; // @ : src typescript
+import Head from "next/head"; // _document import 주의
 
 export const getStaticProps = async () => {
     try {
@@ -14,7 +14,7 @@ export const getStaticProps = async () => {
         // const allBooks = await fetchBooks();
         // const recoBooks = await fetchRandomBooks();
 
-        console.log("인덱스 페이지")
+        // console.log("인덱스 페이지")
         // 병렬 호출 처리
         const [allBooks, recoBooks] = await Promise.all([
             fetchBooks(),

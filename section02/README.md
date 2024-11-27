@@ -345,3 +345,8 @@ ISR(Incremental Static Regeneration)
 ## On-Demand-ISR 
 요청을 받을 때마다 페이지를 다시 생성하는 ISR
 ![ISR](../img/On-demand-ISR.png)
+
+# 26. 2.19) SEO 설정하기
+- favicon 변경
+- meta 태그 변경
+  - nextjs에서는 각페이지별로 meta태그를 적용해줄수 있음(react는 공통?)
