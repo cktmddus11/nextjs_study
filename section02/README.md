@@ -364,4 +364,16 @@ ex) search / [id].tsx
   - 때문에 meta태그를 데이터패치를 통해 조회해온 데이터를    
     가지고 설정하게 되면 데이터 패치가 이루어지기 전이기 때문에     
     meta 태그를 랜더링하지 않은 빈페이지를 렌더링한다.
-  - 
+
+
+
+# 27. 2.20) 배포하기
+- vercel signup and login
+- npm install -g vercel   
+
+## Vercel
+🔍 UI :  [Inspect](https://vercel.com/seungyeon-chas-projects/onbite-books-page/8BQsKJ8aKHR7hx4V69QLv4id7jHn)   
+🔍 API :  [Inspect](https://vercel.com/seungyeon-chas-projects/onbite-books-server/2aWBtED2zLqsXQaLN9iLmV3NELkz)
+
+## 환경변수
+[Next.js-env환경-변수-정리](https://velog.io/@milkboy2564/Next.js-env%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%A0%95%EB%A6%AC)

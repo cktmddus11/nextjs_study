@@ -1,7 +1,7 @@
 import {BookData} from "@/types";
 
 export default async function fetchBookDetail(id?:number) : Promise<BookData | null>{
-    const url = `http://localhost:12345/book/${id}`
+    const url = `${process.env.BOOK_API_URL}/book/${id}` //`http://localhost:12345/book/${id}`
 
     try{
         const response = await fetch(url);
