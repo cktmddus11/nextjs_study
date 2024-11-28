@@ -65,11 +65,16 @@ ex) search, index page 적용시
 
 
 
-- page.tsx : 서버 컴포넌트
+- page.tsx : 기본적으로 서버 컴포넌트
+  - useEffect 등 클라이언트에서 실행되는 함수 사용 불가    
+    => 클라이언트 컴포넌트로 변경할 컴포넌트 상단에 "use client"; 
 
+## 어떨때 클라이언트 컴포넌트, 서버 컴포넌트?
+- 상호작용이 있는 컴포넌트    
+  ex) search bar
 
-
-
+## co-location
+- searchbar.tsx 같이 page, layout 제외한 컴포넌트, app 폴더에 다 모아놔도 됨.
 
 
 
