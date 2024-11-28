@@ -370,6 +370,7 @@ ex) search / [id].tsx
 # 27. 2.20) 배포하기
 - vercel signup and login
 - npm install -g vercel   
+- vercel --prod
 
 ## Vercel
 🔍 UI :  [Inspect](https://vercel.com/seungyeon-chas-projects/onbite-books-page/8BQsKJ8aKHR7hx4V69QLv4id7jHn)   
