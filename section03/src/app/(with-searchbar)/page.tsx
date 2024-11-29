@@ -1,7 +1,7 @@
 // "use client";
-import ClientComponent from "./client-component";
+import ClientComponent from "../component/client-component";
 import styles from "./page.module.css";
-import ServerComponent from "./server-component";
+import ServerComponent from "../component/server-component";
 // import {useEffect} from "react";
 
 export default function Home() {

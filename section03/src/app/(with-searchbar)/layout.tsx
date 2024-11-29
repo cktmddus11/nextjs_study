@@ -1,5 +1,6 @@
 "use client"
-import Searchbar from "@/app/(with-searchbar)/searchbar";
+
+import Searchbar from "../component/searchbar";
 
 export default function Layout({
                                    children,

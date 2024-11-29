@@ -140,3 +140,34 @@ next js 는 서버 컴포넌트를 클리이언트 컴포넌트로 바꿔버린�
         * 클라이언트 컴포넌트에게 전달되는 값
 
 ![RSC Payload](../img/RSC_Payload.png) 
+
+## 34.3.6) 네비게이팅
+1) Link 컴포넌트 사용해서 페이지 이동
+
+### Navigating(페이지 이동)
+페이지 이동은 Client Side Rendering 방식으로 진행됨.(Page Router 방식)
+![App-Router-Pre-Fetching](../img/App-Router-Pre-Fetching.png) 
+
+### 서버 컴포넌트에서 클라이언트 컴포넌트 렌더링 비교
+1. 클라이언트 컴포넌트를 포함하지 않은 경우 (book/[id]/page.tsx)
+- rsc
+2. 클라이언트 컴포넌트를 포함한 경우 (search/page.tsx)
+- rsc + client component
+
+2) 프로그래밍 방식으로 페이지 이동
+- router.push, router.replace 사용
+> 1. `next/router` (Pages Router)
+> 2. `next/navigation` (App Router)
+
+### 프리패칭(Prefetching)
+- 사용자가 특정 페이지를 요청하기 전에 해당 페이지의 리소스를 미리 로드하는 것을 의미합니다
+- 빠른 응답 제공
+- 네트워크 탭에서 확인 가능
+
+### 빌드 시 두가지 렌더링 방식
+| 구분 | Static (○)                    | Dynamic (ƒ) |
+|------|-------------------------------|-------------|
+| **설명** | prerendered as static content | server-rendered on demand |
+| **예시** | page.tsx(root page)           | book/[id]/page.tsx, search/page.tsx |
+| **유사한 방식** | SSG (빌드 시 미리 렌더링)             | SSR (요청 시 렌더링) |
+| **데이터 패칭** | RSC Payload, JS Bundle        | JS Bundle |
