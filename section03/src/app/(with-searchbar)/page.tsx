@@ -1,5 +1,7 @@
 // "use client";
+import ClientComponent from "./client-component";
 import styles from "./page.module.css";
+import ServerComponent from "./server-component";
 // import {useEffect} from "react";
 
 export default function Home() {
@@ -10,6 +12,9 @@ export default function Home() {
     return (
         <>
             <div className={styles.page}>안뇽</div>
+            <ClientComponent>
+                <ServerComponent />
+            </ClientComponent>
         </>
     );
 }

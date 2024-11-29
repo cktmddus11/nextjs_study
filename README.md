@@ -1,4 +1,7 @@
 # Next.js 를 소개합니다. 
+* 🎈[notion](https://three-handbell-c4f.notion.site/Next-js-14c77f05fb34801e81f5e6c3390f0017?pvs=4)
+
+
 ## 어떤 기술일까?
 - React.js 전용 웹 개발 Framework
 - React.js 를 보다 더 강력하고 편하게 사용할 수 있는 기능들을 제공함.
