@@ -72,7 +72,7 @@ router.push("/test")
 사용자가 보고있는 페이지를 미리 불러오는 기능.
 > Q. 왜 필요할까? 이미 Next js 는 CSR 으로 별도의 서버 요청없이 브라우져가 JS를 실행하여 컴포넌트를
 > 교체하는 방식으로 페이지를 교체할 수 있는데.   
-> A. 컴포넌트들을 각 페이지별로 slit 해서 가지고 있기때문임.
+> A. 컴포넌트들을 각 페이지별로 split 해서 가지고 있기때문임.
 
 - **Js Bundle : 현재 페이지에 필요한 JS Bundle 만 전달된다.**
   - ex) "/search" 접속요청 -> Search JS Bundle
@@ -237,7 +237,16 @@ export default Page = () => {
 | **정적 사이트 생성 (SSG)** | - 빌드 타임에 미리 페이지를 생성                                  | - 생성된 페이지를 즉시 응답하므로 빠른 로딩 속도                                          | - 항상 같은 페이지 응답, 최신 데이터 반영 어려움                    |
 | **중분 정적 재생성 (ISR)** | - SSG의 단점을 보완한 사전 렌더링 방식                             | - 주기적으로 페이지를 업데이트하여 최신 데이터 반영 가능                                  | - 설정에 따라 최신 데이터가 실시간 반영되지 않을 수 있음             |
 
-# 2.11) SSR(서버 사이드 렌더링) 소개 및 실습
+### Page Router 빌드 기호 설명
+| 기호 | 의미 | 설명 |
+|------|------|------|
+| λ | Lambda | getServerSideProps가 있는 페이지 (SSR) |
+| ○ | Circle | 정적 페이지 (Static Generation) |
+| ● | Filled Circle | 정적 페이지 (Static with data) |
+| ℇ | Epsilon | ISR (Incremental Static Regeneration) |
+
+
+# 2.11) SSR(Server Side Rendering) 소개 및 실습
 ```js
 export const getServerSideProps = () => {
   // 1. 컴포넌트보다 먼저 실행되어서, 컴포넌트에 필요한 데이터 불러오는 함수
@@ -267,7 +276,7 @@ export default function Home({data} : InferGetServerSidePropsType<typeof getServ
 ```
 
 
-# 2.14) SSG 2. 정적 경로에 적용하기
+# 2.14) SSG(Static Site Generation) 2. 정적 경로에 적용하기
 - npm run build
   -  각 페이지별 렌더링 방식 확인 가능.
 

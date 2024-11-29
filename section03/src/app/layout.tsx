@@ -1,5 +1,6 @@
 import type {Metadata} from "next";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,6 +15,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <header>
+          <Link href={'/'}>index</Link>  
+          &nbsp;
+          <Link href={'/search'}>search</Link>  {/* 서버 컴포넌트인 search 페이지 이동시 네트워크 탭의 fetch/xhr 에서 rsc 를 확인해 볼 수 있음.*/} 
+          &nbsp;
+          <Link href={'/book/1'}>book/1</Link>  
+        </header>
         {children}
       </body>
     </html>
