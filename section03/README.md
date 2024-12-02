@@ -171,3 +171,11 @@ next js 는 서버 컴포넌트를 클리이언트 컴포넌트로 바꿔버린�
 | **예시** | page.tsx(root page)           | book/[id]/page.tsx, search/page.tsx |
 | **유사한 방식** | SSG (빌드 시 미리 렌더링)             | SSR (요청 시 렌더링) |
 | **데이터 패칭** | RSC Payload, JS Bundle        | JS Bundle |
+
+
+
+```
+npm install @xyflow/react --legacy-peer-deps
+npm install react-draggable@4.4.6 --legacy-peer-deps
+npm install reactflow   
+```
