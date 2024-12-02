@@ -1,20 +1,22 @@
-// "use client";
-import ClientComponent from "../component/client-component";
-import styles from "./page.module.css";
-import ServerComponent from "../component/server-component";
-// import {useEffect} from "react";
+import BookItem from "@/components/book-item";
+import style from "./page.module.css";
+import books from "@/mock/books.json";
 
 export default function Home() {
-    console.log("Home 컴포넌트 렌더링")
-    // useEffect(() => {  // TS71001: "useEffect" is not allowed in Server Components.
-    //
-    // }, []);
-    return (
-        <>
-            <div className={styles.page}>안뇽</div>
-            <ClientComponent>
-                <ServerComponent />
-            </ClientComponent>
-        </>
-    );
+  return (
+    <div className={style.container}>
+      <section>
+        <h3>지금 추천하는 도서</h3>
+        {books.map((book) => (
+          <BookItem key={book.id} {...book} />
+        ))}
+      </section>
+      <section>
+        <h3>등록된 모든 도서</h3>
+        {books.map((book) => (
+          <BookItem key={book.id} {...book} />
+        ))}
+      </section>
+    </div>
+  );
 }

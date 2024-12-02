@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@types/react": "^18.3.12"
+    "@types/react": "^18.3.12",
+    "reactflow": "^11.11.4"
   }
 }
