@@ -13,7 +13,6 @@ import {
     useStoreApi,
     MiniMap,
 } from '@xyflow/react';
-
 import '@xyflow/react/dist/style.css';
 
 
@@ -22,7 +21,6 @@ import { DnDProvider, useDnD } from '@/components/flow/DnDContext';
 import Sidebar from '@/components/flow/Sidebar';
 import { Edge } from "reactflow";
 
-import '@/components/flow/tailwind-config.js';
 import CustomNode from '@/components/flow/CustomNode';
 
 

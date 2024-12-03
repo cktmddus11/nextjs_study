@@ -202,3 +202,9 @@ const q = searchParams.get("q");        // 'q' 파라미터의 값을 가져옴
 ```
 참고로, 이전 Pages Router에서는 `useRouter().query`로 쿼리 파라미터에 접근했지만, App Router에서는 `useSearchParams`를 사용해야 합니다.
 
+
+```
+npm install -D tailwindcss --legacy-peer-deps
+npx tailwindcss init
+```
+
