@@ -179,3 +179,8 @@ npm install @xyflow/react --legacy-peer-deps
 npm install react-draggable@4.4.6 --legacy-peer-deps
 npm install reactflow   
 ```
+
+```
+npm install -D tailwindcss --legacy-peer-deps
+npx tailwindcss init
+```
