@@ -178,8 +178,13 @@ next js 는 서버 컴포넌트를 클리이언트 컴포넌트로 바꿔버린�
 npm install @xyflow/react --legacy-peer-deps
 npm install react-draggable@4.4.6 --legacy-peer-deps
 npm install reactflow --legacy-peer-deps
+```
 
 ```
+npm install -D tailwindcss --legacy-peer-deps
+npx tailwindcss init
+```
+
 # 35. 3.7) 한입북스 UI 구현하기 
 ### useSearchParams
 `useSearchParams`는 Next.js 13 이상의 App Router에서 URL의 쿼리 파라미터를 읽기 위해 사용되는 클라이언트 사이드 훅입니다.
@@ -196,3 +201,4 @@ const searchParams = useSearchParams(); // URL 쿼리 파라미터에 접근
 const q = searchParams.get("q");        // 'q' 파라미터의 값을 가져옴
 ```
 참고로, 이전 Pages Router에서는 `useRouter().query`로 쿼리 파라미터에 접근했지만, App Router에서는 `useSearchParams`를 사용해야 합니다.
+
