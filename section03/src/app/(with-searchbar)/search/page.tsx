@@ -4,8 +4,8 @@ import BookItem from "@/components/book-item";
 export default function Page({
   searchParams,
 }: {
-  searchParams: {
-    q?: string;
+  searchParams: { 
+    q?: string; 
   };
 }) {
   return (

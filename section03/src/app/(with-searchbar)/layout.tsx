@@ -1,3 +1,4 @@
+// layout.tsx :모든 컴포넌트의 공통 레이아웃 컴포넌트. 
 "use client"
 
 import Searchbar from "../../components/searchbar";

@@ -177,10 +177,28 @@ next js 는 서버 컴포넌트를 클리이언트 컴포넌트로 바꿔버린�
 ```
 npm install @xyflow/react --legacy-peer-deps
 npm install react-draggable@4.4.6 --legacy-peer-deps
-npm install reactflow   
+npm install reactflow --legacy-peer-deps
 ```
 
 ```
 npm install -D tailwindcss --legacy-peer-deps
 npx tailwindcss init
 ```
+
+# 35. 3.7) 한입북스 UI 구현하기 
+### useSearchParams
+`useSearchParams`는 Next.js 13 이상의 App Router에서 URL의 쿼리 파라미터를 읽기 위해 사용되는 클라이언트 사이드 훅입니다.
+
+주요 특징:
+1. **클라이언트 컴포넌트 전용**: "use client" 지시문이 필요합니다.
+2. **읽기 전용**: 쿼리 파라미터를 읽을 수만 있고, 직접 수정은 불가능합니다.
+3. **실시간 업데이트**: URL이 변경될 때마다 자동으로 최신 값을 반영합니다.
+
+예시 코드에서는 다음과 같이 사용되고 있습니다:
+
+```typescript:section03/src/components/searchbar.tsx
+const searchParams = useSearchParams(); // URL 쿼리 파라미터에 접근
+const q = searchParams.get("q");        // 'q' 파라미터의 값을 가져옴
+```
+참고로, 이전 Pages Router에서는 `useRouter().query`로 쿼리 파라미터에 접근했지만, App Router에서는 `useSearchParams`를 사용해야 합니다.
+
