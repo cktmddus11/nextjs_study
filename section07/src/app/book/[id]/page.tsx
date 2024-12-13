@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import style from "./page.module.css";
+import { createReviewAction } from "@/actions/create-review.action";
+import { useActionState } from "react";
 
 // export const dynamicParams = false;
 // export function generateStaticParams() {
@@ -51,25 +53,14 @@ async function BookDetail({ bookId }: { bookId: string }) {
   );
 }
 
-function ReviewEditor() {
-
-  async function createReviewAction(formData: FormData){
-    "use server";
-    //console.log("server action call")
-    console.log(formData);
-
-    const content = formData.get("content");
-    const rating = formData.get("rating");
-    const author = formData.get("author");
-
-    console.log(content, rating, author);
-  }
+function ReviewEditor({ bookId }: { bookId: string }) {
 
   return <section>
     <form action={createReviewAction}>
-      <input name="content" placeholder="리뷰를 입력해주세요." />
-      <input name="rating" placeholder="별점을 입력해주세요."/> 
-      <input name="author" placeholder="작성자를 입력해주세요." />
+      <input name="bookId" value={bookId} hidden  readOnly/> {/** value 는 있지만 onChange 가 없으면 에러를 발생시킴. readOnly 속성으로 에러 방지 */}
+      <input required name="content" placeholder="리뷰를 입력해주세요." />
+      {/* <input name="rating" placeholder="별점을 입력해주세요."/>  */}
+      <input required name="author" placeholder="작성자를 입력해주세요." />
       <button type="submit">리뷰 작성</button>
     </form>
   </section>
@@ -84,7 +75,7 @@ export default async function Page({
   return (
     <div className={style.container}>
       <BookDetail bookId={bookId} />
-      <ReviewEditor />
+      <ReviewEditor bookId={bookId} />
     </div>
   );
 }

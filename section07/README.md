@@ -27,3 +27,15 @@ export default function Page(){
 - client component를 만들던지, api handler 만들던지 하는 방법이 있지만
     - 서버 액션을 사용하면 보다 쉽게 사용할 수 있음.
 - 서버측에서만 데이터를 처리하기 때문에 보안성이 높음.
+- 간편하게 서버측에서 실행하는 동작을 정의하기 위함.
+
+
+## 50. 7.2 리뷰 추가 기능 구현하기
+- 리뷰 추가 api 호출 코드 구현
+    - 서버에서 명령어 실행 npx prisma studio => 데이터베이스 데이터 확인가능.
+- 서버 액션 코드 분리하기
+    - src/actions/create-review.action.ts
+    - 별도의 코드로 분리할 때는 'use server'는 코드의 최상단에 위치해야함.
+- 폼 데이터 전달 시 폼 데이터에 포함되지 않은 값을 전달하기 위해서는 hidden 속성을 사용해야함.
+    - onChange 가 없으면 에러를 발생시킴 =>  readOnly 속성으로 에러 방지.
+
