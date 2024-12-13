@@ -42,3 +42,37 @@ export async function Page(props){
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book/random`);
 
 ```
+## 36. 4.2) 데이터 캐시
+fetch 메서드를 활용해 불러운 데이터를 Next 서버에서 보관하는 기능
+
+### 데이터 캐시
+불필요한 데이터 요청의 수를 줄여서 웹 서비스의 성능을 크게 개선할 수 있음.
+
+```typescript
+const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`, {
+    cache: 'no-store' // 옵션 : 'force-cache', 'no-cache', 'no-store'
+});
+```
+```typescript
+const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`, {
+    next: {
+        revalidate: 10 // 10초 후 재요청
+    } // 옵션 : revalidate, tags
+});
+```
+### 캐시 옵션(fetch 메서드에서만 사용 가능)
+- `no-store` (fetch 기본값)
+    - 데이터 패칭의 결과를 저장하지 않는 옵션
+    - 캐싱을 아예 하지 않도록 설정하는 옵션
+    - 데이터를 캐시에서 가져오지 않음. 서버에서 데이터를 가져옴.
+    [NO_STORE](../img/NO_STORE.png)
+- `force-cache`
+    - 요청의 결과를 무조건 캐싱함.
+    - 한번 호출된 이후에는 다시는 호출되지 않음.
+    - 데이터를 캐시에서 가져옴. 캐시가 없으면 서버에서 가져옴.
+- `no-cache`: 데이터를 캐시에서 가져오지 않음. 서버에서 데이터를 가져옴.
+
+### Next.js 15 캐시 변경
+- 데이터 캐시 옵션 변경
+    - 원래는 기본적으로 `force-cache` 옵션이 적용되어 있었음.
+    - 이제는 기본적으로 `no-store` 옵션이 적용됨.

@@ -1,7 +1,7 @@
 import BookItem from "@/components/book-item";
 import style from "./page.module.css";
-import {BookData} from "@/types";
-import {JSX} from "react";
+import { BookData } from "@/types";
+import { JSX } from "react";
 
 // import books from "@/mock/books.json";
 
@@ -10,7 +10,9 @@ async function AllBooks() {
     let allBooks: BookData[] = [];
     try { // try-catch : 네트워크 등 기술적인 문제 처리
         // 비동기 함수에서 반환되는 값은 Promise 객체임
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
+            { cache: 'no-store' } // cache skip
+        );
         // 응답상태에 따른 처리로 HTTP 상태코드 관련 오류 처리.
         if (!response.ok) return <div>오류가 발생했습니다....</div>
 
@@ -29,7 +31,7 @@ async function AllBooks() {
 }
 
 async function RecoBooks() {
-    let recoBooks : BookData[] = [];
+    let recoBooks: BookData[] = [];
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`);
         if (!response.ok) return <div>오류가 발생했습니다....</div>
@@ -52,11 +54,11 @@ export default async function Home() {
         <div className={style.container}>
             <section>
                 <h3>지금 추천하는 도서</h3>
-                <RecoBooks/>
+                <RecoBooks />
             </section>
             <section>
                 <h3>등록된 모든 도서</h3>
-                <AllBooks/>
+                <AllBooks />
             </section>
             {/*<main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 text-center">*/}
             {/*    <h1 className="text-4xl font-bold text-blue-500">Hello, Tailwind CSS!</h1>*/}
