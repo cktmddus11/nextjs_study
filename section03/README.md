@@ -139,14 +139,14 @@ next js 는 서버 컴포넌트를 클리이언트 컴포넌트로 바꿔버린�
         * 연결된 클라이언트 컴포넌트 위치
         * 클라이언트 컴포넌트에게 전달되는 값
 
-![RSC Payload](../img/RSC_Payload.png) 
+![RSC Payload](../img/RSC_PAYLOAD.png) 
 
 ## 34.3.6) 네비게이팅
 1) Link 컴포넌트 사용해서 페이지 이동
 
 ### Navigating(페이지 이동)
-페이지 이동은 Client Side Rendering 방식으로 진행됨.(Page Router 방식)
-![App-Router-Pre-Fetching](../img/App-Router-Pre-Fetching.png) 
+페이지 이동은 Client Side Rendering 방식으로 진행됨.(Page Router 방식)   
+![App-Router-Pre-Fetching](../img/App-router-Pre-Fetching.png)
 
 ### 서버 컴포넌트에서 클라이언트 컴포넌트 렌더링 비교
 1. 클라이언트 컴포넌트를 포함하지 않은 경우 (book/[id]/page.tsx)
