@@ -7,15 +7,16 @@ import ReviewItem from "@/components/review-item";
 import ReviewEditor from "@/components/review-editor";
 
 // export const dynamicParams = false;
-// export function generateStaticParams() {
-//   return [{ id: "1" }, { id: "2" }, { id: "3" }];
-// }
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
 
 async function BookDetail({ bookId }: { bookId: string }) {
   const encodedId = encodeURIComponent(bookId);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${encodedId}`
+    , { cache: 'force-cache' }
   );
 
   console.log(response);
@@ -85,7 +86,7 @@ export default async function Page({
   params: { id: string };
 }) {
   const bookId = params.id;
-  return (
+  return ( // 리뷰 작성 시 리뷰 목록이 재검증되도록 구현했기 때문에 아래 컴포넌트들이 다시렌더링 됨.
     <div className={style.container}>
       <BookDetail bookId={bookId} />
       <ReviewEditor bookId={bookId} />

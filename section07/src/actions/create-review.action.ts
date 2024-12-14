@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 export async function createReviewAction(formData: FormData) {
     //console.log("server action call")
     console.log(formData);
@@ -23,7 +25,7 @@ export async function createReviewAction(formData: FormData) {
         body: JSON.stringify({ bookId, content, author }),
       });
       console.log(response.status);
-      
+      revalidatePath(`/book/${bookId}`);
     } catch (error) {
       console.error(error);
       return;

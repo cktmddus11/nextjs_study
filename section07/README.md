@@ -39,3 +39,19 @@ export default function Page(){
 - 폼 데이터 전달 시 폼 데이터에 포함되지 않은 값을 전달하기 위해서는 hidden 속성을 사용해야함.
     - onChange 가 없으면 에러를 발생시킴 =>  readOnly 속성으로 에러 방지.
 
+
+## 50. 7.4) 리뷰 재검증 구현하기
+- 리뷰 작성 후 리뷰 목록에서 작성한 리뷰를 확인할 수 있도록 구현.
+    - revalidatePath 함수를 사용하여 페이지를 재검증.
+        - 리뷰 목록이 포함된 페이지인 book 상세 화면 전체를 서버에서 리렌더링됨.
+        - 데이터 캐싱을 해둔 fetch도 캐시가 초기화되며 다시 데이터를 가져오게 됨.        
+```typescript
+import { revalidatePath } from "next/cache";
+
+revalidatePath(`/book/${bookId}`);
+```
+- revalidatePath 함수는 서버 컴포넌트 또는 서버 액션에서 사용할 수 있음.
+- generateStaticParams(full route cache)는 재검증 되지 않음.
+  - production 모드 빌드 내용의 app > book > [id] > page.tsx 파일을 확인해보면 캐싱 내용을 확인할 수 있지만 새로 작성한 리뷰는 캐싱 내용에 포함되지 않음. 
+  즉 full route cache는 무효화된 캐시임.
+  - 서버에서는 동적 페이지를 만드는것처럼 다시 렌더링 됨.
