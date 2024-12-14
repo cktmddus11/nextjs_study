@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import style from "./page.module.css";
 import { createReviewAction } from "@/actions/create-review.action";
 import { useActionState } from "react";
+import { ReviewData } from "@/types";
+import ReviewItem from "@/components/review-item";
+import ReviewEditor from "@/components/review-editor";
 
 // export const dynamicParams = false;
 // export function generateStaticParams() {
@@ -52,19 +55,29 @@ async function BookDetail({ bookId }: { bookId: string }) {
     </section>
   );
 }
+async function ReviewList({
+  bookId
+}: {
+  bookId: string
+}) {
+  const response = await fetch(`
+    ${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}
+    `);
+  if (!response.ok) {
+    throw new Error(`Review Fetch Failed : ${response.statusText}`)
+  }
 
-function ReviewEditor({ bookId }: { bookId: string }) {
+  //const reviews = await response.json(); // 이렇게만하면 type오류 발생하므로 type을 지정해줌.
+  const reviews: ReviewData[] = await response.json();
+  // console.log(seviews);
 
   return <section>
-    <form action={createReviewAction}>
-      <input name="bookId" value={bookId} hidden  readOnly/> {/** value 는 있지만 onChange 가 없으면 에러를 발생시킴. readOnly 속성으로 에러 방지 */}
-      <input required name="content" placeholder="리뷰를 입력해주세요." />
-      {/* <input name="rating" placeholder="별점을 입력해주세요."/>  */}
-      <input required name="author" placeholder="작성자를 입력해주세요." />
-      <button type="submit">리뷰 작성</button>
-    </form>
+    {reviews.map((review: any) =>
+      <ReviewItem key={`review-item-${review.id}`} {...review} />
+    )}
   </section>
 }
+
 
 export default async function Page({
   params,
@@ -76,6 +89,7 @@ export default async function Page({
     <div className={style.container}>
       <BookDetail bookId={bookId} />
       <ReviewEditor bookId={bookId} />
+      <ReviewList bookId={bookId} />
     </div>
   );
 }
