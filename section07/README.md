@@ -55,3 +55,29 @@ revalidatePath(`/book/${bookId}`);
   - production 모드 빌드 내용의 app > book > [id] > page.tsx 파일을 확인해보면 캐싱 내용을 확인할 수 있지만 새로 작성한 리뷰는 캐싱 내용에 포함되지 않음. 
   즉 full route cache는 무효화된 캐시임.
   - 서버에서는 동적 페이지를 만드는것처럼 다시 렌더링 됨.
+
+
+## 50. 7.5 다양한 재검증 방식 알아보기
+```typescript
+// 1. 특정주소의 해당하는 페이지만 재검증
+revalidatePath(`/book/${bookId}`);
+revalidatePath(`/book/${bookId}`, 'page');
+
+// 2. 특정경로의 모든 동적 페이지를 제검증
+revalidatePath("/book/[id]", "page");
+
+// 3. 특정 레이아웃을 갖는 모든 페이지 재검증
+revalidatePath("/(with-searchbar)", "layout");
+
+// 4. 모든 데이터 재검증
+revalidatePath("/", "layout");
+
+// 5. 태그 기준. 데이터 캐시 재검증
+revalidateTag(`review-${bookId}`);
+```
+
+```typescript
+const response = await fetch("https://api.example.com/data", {
+  next: { tags: [`review-${bookId}`] }
+});
+```

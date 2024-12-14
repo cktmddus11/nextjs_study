@@ -63,7 +63,8 @@ async function ReviewList({
 }) {
   const response = await fetch(`
     ${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}
-    `);
+    `, { next: { tags: [`review-${bookId}`] } });
+
   if (!response.ok) {
     throw new Error(`Review Fetch Failed : ${response.statusText}`)
   }
@@ -71,7 +72,7 @@ async function ReviewList({
   //const reviews = await response.json(); // 이렇게만하면 type오류 발생하므로 type을 지정해줌.
   const reviews: ReviewData[] = await response.json();
   // console.log(seviews);
-
+  
   return <section>
     {reviews.map((review: any) =>
       <ReviewItem key={`review-item-${review.id}`} {...review} />

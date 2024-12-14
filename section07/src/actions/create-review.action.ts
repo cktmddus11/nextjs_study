@@ -25,6 +25,7 @@ export async function createReviewAction(formData: FormData) {
         body: JSON.stringify({ bookId, content, author }),
       });
       console.log(response.status);
+
       revalidatePath(`/book/${bookId}`);
     } catch (error) {
       console.error(error);
