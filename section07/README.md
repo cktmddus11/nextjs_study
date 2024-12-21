@@ -73,7 +73,7 @@ revalidatePath("/(with-searchbar)", "layout");
 revalidatePath("/", "layout");
 
 // 5. 태그 기준. 데이터 캐시 재검증
-revalidateTag(`review-${bookId}`);
+revalidateTag(`review-${bookId}`); // Path 기준보다 효율성 있게 원하는 부분만 재검증할 수 있음.
 ```
 
 ```typescript
@@ -81,3 +81,90 @@ const response = await fetch("https://api.example.com/data", {
   next: { tags: [`review-${bookId}`] }
 });
 ```
+## 54.7.6) 클라이언트 컴포넌트에서의 서버액션
+### 개요
+`useActionState`는 React와 Next.js에서 서버 액션을 위한 상태 관리를 간소화하는 훅입니다. 이전의 `useFormState`를 대체하며, 더욱 직관적이고 강력한 폼 상태 관리 기능을 제공합니다.
+### 주요 특징
+- 서버 액션과 긴밀하게 통합
+- 폼 제출 상태 쉽게 관리
+- 로딩, 성공, 에러 상태 추적
+- 클라이언트 사이드 상태 관리
+
+### 설치 및 요구사항
+- Next.js 14 이상
+- React 18 이상
+
+### 기본 사용법
+```typescript
+'use client'
+
+import { useActionState } from 'react'
+import { submitForm } from './actions'
+
+export default function MyForm() {
+  const [state, formAction, isPending] = useActionState(submitForm, {
+    message: '',
+    errors: {}
+  })
+
+  return (
+    <form action={formAction}>
+      {/* 폼 입력 필드 */}
+      <button type="submit" disabled={isPending}>
+        {isPending ? '제출 중...' : '제출'}
+      </button>
+      
+      {state.message && <p>{state.message}</p>}
+      {state.errors?.name && <p>{state.errors.name}</p>}
+    </form>
+  )
+}
+```
+
+### API 상세
+
+#### 매개변수
+- `action`: 서버 액션 함수
+- `initialState`: 초기 상태 객체
+- `permalink`: 선택적 영구 링크 (고급 사용)
+
+#### 반환값
+- `state`: 현재 폼 상태
+- `formAction`: 폼에 전달할 액션 함수
+- `isPending`: 현재 제출 진행 상태
+
+### 주요 장점
+
+1. **간단한 상태 관리**: 복잡한 상태 로직 간소화
+2. **즉시 피드백**: 로딩 및 에러 상태 쉽게 표시
+3. **성능 최적화**: 서버 액션과 직접 통합
+
+### 모범 사용 사례
+
+- 폼 제출
+- 즉각적인 사용자 피드백
+- 낙관적 UI 업데이트
+
+### 주의사항
+
+- 클라이언트 컴포넌트에서만 사용 가능 (`'use client'` 필요)
+- 서버 액션과 함께 사용
+- 오류 처리에 주의
+
+### 에러 핸들링 예시
+
+```typescript
+const [state, formAction] = useActionState(async (prevState, formData) => {
+  try {
+    // 서버 액션 로직
+    return { message: '성공', errors: {} }
+  } catch (error) {
+    return { 
+      message: '제출 실패', 
+      errors: error.flatten?.fieldErrors || {} 
+    }
+  }
+}, { message: '', errors: {} })
+```
+
+
