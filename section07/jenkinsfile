@@ -1,0 +1,87 @@
+pipeline {
+    agent any
+
+    environment {
+        // Docker 이미지 이름과 태그 설정
+        IMAGE_NAME = 'nextjs-app'
+        IMAGE_TAG = 'latest'
+        ROOT_DIR = 'section07'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // GitHub 저장소에서 최신 코드를 가져옵니다
+                 git url: 'https://github.com/cktmddus11/nextjs_study.git', branch: 'main'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Docker 이미지 빌드
+                     try {
+                        echo "Changing directory to ${DOCKER_DIR}..."
+                        dir("${DOCKER_DIR}") {
+                            echo "Building Docker image with tag ${IMAGE_TAG}..."
+                            sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
+                            echo "Docker image build successful."
+                        }
+                    } catch (e) {
+                        echo "Error during Docker image build: ${e.getMessage()}"
+                        throw e
+                    }
+                }
+            }
+        }
+
+        stage('Stop Old Container') {
+            steps {
+                script {
+                    // 기존 컨테이너를 중지하고 삭제합니다
+                   try {
+                        echo "Stopping any existing containers with the name ${IMAGE_NAME}..."
+                        sh 'docker ps -q --filter "name=$IMAGE_NAME" | xargs -r docker stop'
+                        echo "Successfully stopped old containers."
+                        echo "Removing old containers..."
+                        sh 'docker ps -a -q --filter "name=$IMAGE_NAME" | xargs -r docker rm'
+                        echo "Old containers removed."
+                    } catch (e) {
+                        echo "Error during container stop/remove: ${e.getMessage()}"
+                        throw e
+                    }
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+               script {
+                    try {
+                        echo "Running new Docker container..."
+                        sh 'docker run -d -p 3000:3000 --name $IMAGE_NAME $IMAGE_NAME:$IMAGE_TAG'
+                        echo "Successfully started new Docker container."
+                    } catch (e) {
+                        echo "Error during Docker container run: ${e.getMessage()}"
+                        throw e
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // 항상 실행되는 단계 (옵션: 로그 출력 등)
+            echo "Pipeline execution complete."
+        }
+        success {
+            // 성공적인 빌드 후 처리
+            echo "Build and deployment succeeded!"
+        }
+        failure {
+            // 실패한 경우 처리
+            echo "Build or deployment failed!"
+        }
+    }
+}
