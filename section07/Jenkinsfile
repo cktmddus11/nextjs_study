@@ -21,8 +21,8 @@ pipeline {
                 script {
                     // Docker 이미지 빌드
                      try {
-                        echo "Changing directory to ${DOCKER_DIR}..."
-                        dir("${DOCKER_DIR}") {
+                        echo "Changing directory to ${ROOT_DIR}..."
+                        dir("${ROOT_DIR}") {
                             echo "Building Docker image with tag ${IMAGE_TAG}..."
                             sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
                             echo "Docker image build successful."
