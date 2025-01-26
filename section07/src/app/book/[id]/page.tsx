@@ -6,9 +6,9 @@ import ReviewItem from "@/components/review-item";
 import ReviewEditor from "@/components/review-editor";
 
 // export const dynamicParams = false;
-export function generateStaticParams() {
-    return [{id: "1"}, {id: "2"}, {id: "3"}];
-}
+// export function generateStaticParams() {
+//     return [{id: "1"}, {id: "2"}, {id: "3"}];
+// }
 
 async function BookDetail({bookId}: { bookId: string }) {
     const encodedId = encodeURIComponent(bookId);

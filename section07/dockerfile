@@ -1,0 +1,22 @@
+# 1. 빌드 단계
+# Node.js 20 이미지를 기반으로 한 빌드 단계. AS builder는 멀티 스테이지 빌드를 정의하기 위한 별칭
+FROM node:20 AS builder
+# 컨테이너 내에서 작업 디렉토리를 /app으로 설정
+WORKDIR /app
+# 현재 디렉토리(로컬 머신의 소스 코드)를 컨테이너의 /app 디렉토리에 복사
+COPY . .
+RUN npm install && npm run build
+
+# 2. 런타임 단계
+# Node.js 20 이미지를 기반으로 프로덕션 이미지를 생성합니다.
+FROM node:20
+# 런타임 작업 디렉토리를 /app으로 설정
+WORKDIR /app
+# Node.js 환경 변수를 production으로 설정. 이는 의존성 로딩 및 실행 방식에 영향을 줌(예: 개발 전용 패키지는 제외).
+# ENV NODE_ENV=development
+# 첫 번째 단계(builder)에서 생성된 /app 디렉토리의 내용을 현재 단계로 복사. 빌드 결과물만 가져오므로 프로덕션 환경에 불필요한 파일(예: 개발용 의존성, 소스 코드 등)을 포함하지 않음.
+COPY --from=builder /app ./
+# 컨테이너가 3000번 포트를 외부에 노출하도록 설정
+EXPOSE 3000
+# 컨테이너 실행 시 npm start 명령을 실행하여 애플리케이션을 시작
+CMD ["npm", "start"]
